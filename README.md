@@ -3,7 +3,7 @@
 A .NET library that converts numeric keypad sequences into text, simulating classic mobile phone text input (T9). Implements the Chain of Responsibility pattern for processing multi-press character sequences, special characters, backspace, and spaces.
 
 [![.NET CI/CD](https://github.com/thromel/OldPhoneKeypadDecoder/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/thromel/OldPhoneKeypadDecoder/actions/workflows/ci-cd.yml)
-[![codecov](https://codecov.io/gh/thromel/OldPhoneKeypadDecoder/branch/main/graph/badge.svg)](https://codecov.io/gh/thromel/OldPhoneKeypadDecoder)
+[![codecov](https://codecov.io/gh/thromel/OldPhoneKeypadDecoder/graph/badge.svg?token=XVCPE0D27B)](https://codecov.io/gh/thromel/OldPhoneKeypadDecoder)
 
 ## Features
 
