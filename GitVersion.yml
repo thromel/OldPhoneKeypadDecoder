@@ -8,22 +8,18 @@ branches:
     regex: ^dev(elop)?$
     mode: ContinuousDeployment
     increment: Minor
-    source-branches: ['master', 'main']
   master:
     regex: ^master$
     mode: ContinuousDeployment
     increment: Patch
-    is-mainline: true
   main:
     regex: ^main$
     mode: ContinuousDeployment
     increment: Patch
-    is-mainline: true
   feature:
     regex: ^features?[/-]
     mode: ContinuousDeployment
     increment: Inherit
-    source-branches: ['develop']
 
 ignore:
   sha: []
