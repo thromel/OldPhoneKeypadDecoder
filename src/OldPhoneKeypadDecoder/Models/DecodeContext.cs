@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using OldPhoneKeypadDecoder.Interfaces;
 
@@ -9,17 +10,11 @@ namespace OldPhoneKeypadDecoder.Models
     /// This class handles buffering of repeated key presses and manages
     /// the current decoding state.
     /// </summary>
-    public class DecodeContext
+    public class DecodeContext(IKeyLayoutStrategy? layoutStrategy)
     {
-        private readonly IKeyLayoutStrategy _layoutStrategy;
+        private readonly IKeyLayoutStrategy _layoutStrategy = layoutStrategy ?? throw new ArgumentNullException(nameof(layoutStrategy));
 
-        public DecodeContext(IKeyLayoutStrategy? layoutStrategy)
-        {
-            _layoutStrategy = layoutStrategy ?? throw new ArgumentNullException(nameof(layoutStrategy));
-            Result = new StringBuilder();
-        }
-
-        public StringBuilder Result { get; }
+        public StringBuilder Result { get; } = new();
         public char ActiveKey { get; set; }
         public int Presses { get; set; }
 
@@ -36,7 +31,7 @@ namespace OldPhoneKeypadDecoder.Models
         private void AppendCharacterFromBuffer()
         {
             if (ActiveKey == '\0' || Presses <= 0) return;
-            
+
             var ch = _layoutStrategy.GetCharacterForKeyPress(ActiveKey, Presses);
             if (ch != '\0')
             {
