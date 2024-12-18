@@ -12,6 +12,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for GitVersion
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.10.2
+        with:
+          preferLatestVersion: true
+
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.10.2
+        with:
+          useConfigFile: true
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -33,22 +45,10 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
 
-      - name: Publish
+      - name: Pack NuGet package
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        run: |
-          dotnet publish src/OldPhoneKeypadDecoder/OldPhoneKeypadDecoder.csproj -c Release -o publish/lib
-          dotnet publish src/OldPhoneKeypadDecoder.ConsoleApp/OldPhoneKeypadDecoder.ConsoleApp.csproj -c Release -o publish/console
+        run: dotnet pack src/OldPhoneKeypadDecoder/OldPhoneKeypadDecoder.csproj -c Release -o publish/nuget
 
-      - name: Upload Library Artifact
+      - name: Push to NuGet
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        uses: actions/upload-artifact@v3
-        with:
-          name: OldPhoneKeypadDecoder-Library
-          path: publish/lib
-
-      - name: Upload Console App Artifact
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        uses: actions/upload-artifact@v3
-        with:
-          name: OldPhoneKeypadDecoder-Console
-          path: publish/console
+        run: dotnet nuget push "publish/nuget/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

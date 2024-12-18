@@ -4,6 +4,32 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    
+    <!-- Package Information -->
+    <PackageId>OldPhoneKeypadDecoder</PackageId>
+    <Authors>Tanzim Hossain Romel</Authors>
+    <Company>thromel</Company>
+    <Description>A .NET library that converts numeric keypad sequences into text, simulating classic mobile phone text input (T9). Implements the Chain of Responsibility pattern for processing multi-press character sequences.</Description>
+    <PackageTags>phone;keypad;t9;decoder;text-input</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/thromel/OldPhoneKeypadDecoder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/thromel/OldPhoneKeypadDecoder</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    
+    <!-- Source Link -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>
