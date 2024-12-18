@@ -1,9 +1,12 @@
 mode: ContinuousDeployment
+major-version-bump-message: "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\([\\w\\s-]*\\))?(!:|:.*\\n\\n((.+\\n)+\\n)?BREAKING CHANGE:\\s.+)"
+minor-version-bump-message: "^(feat)(\\([\\w\\s-]*\\))?: "
+patch-version-bump-message: "^(build|chore|ci|docs|fix|perf|refactor|revert|style|test)(\\([\\w\\s-]*\\))?: "
+
 branches:
   main:
     regex: ^master$|^main$
     mode: ContinuousDeployment
-    tag: ''
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
@@ -15,12 +18,15 @@ branches:
   feature:
     regex: ^features?[/-]
     mode: ContinuousDeployment
-    tag: useBranchName
     increment: Inherit
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
-    source-branches: ['main']
+    source-branches: ['main', 'master']
     tracks-release-branches: false
     is-release-branch: false
     is-mainline: false
-    pre-release-weight: 30000 
+    pre-release-weight: 30000
+
+ignore:
+  sha: []
+merge-message-formats: {}
