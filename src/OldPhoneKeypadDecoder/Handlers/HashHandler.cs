@@ -3,8 +3,10 @@ using OldPhoneKeypadDecoder.Models;
 
 namespace OldPhoneKeypadDecoder.Handlers
 {
+    /// <inheritdoc />
     public class HashHandler(IKeyLayoutStrategy layoutStrategy) : BaseHandler(layoutStrategy)
     {
+        /// <inheritdoc />
         public override void Handle(char ch, DecodeContext context)
         {
             if (ch == '#')

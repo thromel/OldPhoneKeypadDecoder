@@ -3,6 +3,15 @@ using OldPhoneKeypadDecoder.Models;
 
 namespace OldPhoneKeypadDecoder.Handlers
 {
+    /// <summary>
+    /// Handles backspace operations in the phone keypad decoder chain.
+    /// Processes the '*' character as a backspace command.
+    /// </summary>
+    /// <remarks>
+    /// When a backspace is encountered:
+    /// - If there's an active buffer, it clears the buffer
+    /// - If there's no active buffer but there are characters in the result, it removes the last character
+    /// </remarks>
     public class BackspaceHandler(IKeyLayoutStrategy layoutStrategy) : BaseHandler(layoutStrategy)
     {
         public override void Handle(char ch, DecodeContext context)

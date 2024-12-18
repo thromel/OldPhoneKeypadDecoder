@@ -7,18 +7,18 @@ namespace OldPhoneKeypadDecoder.Handlers
     {
         public override void Handle(char ch, DecodeContext context)
         {
-            if (ch == '0')
+            switch (ch)
             {
-                context.FlushBuffer();
-                context.Result.Append(' ');
-            }
-            else if (ch == ' ')
-            {
-                context.FlushBuffer();
-            }
-            else
-            {
-                base.Handle(ch, context);
+                case '0':
+                    context.FlushBuffer();
+                    context.Result.Append(' ');
+                    break;
+                case ' ':
+                    context.FlushBuffer();
+                    break;
+                default:
+                    base.Handle(ch, context);
+                    break;
             }
         }
     }

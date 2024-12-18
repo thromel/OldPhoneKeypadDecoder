@@ -10,13 +10,14 @@ namespace OldPhoneKeypadDecoder.Services
     /// Implements the old phone keypad decoding service using the Chain of Responsibility pattern.
     /// This service processes input sequences according to the classic mobile phone keypad layout
     /// where multiple presses of the same key cycle through available characters.
-    ///
+    /// </summary>
+    /// <remarks>
     /// Key features:
     /// - Handles multi-press character selection (e.g., pressing '2' three times gives 'C')
     /// - Supports special characters through the '1' key
     /// - Implements backspace (*) and confirmation (#) functionality
     /// - Manages spaces through the '0' key
-    /// </summary>
+    /// </remarks>
     public class OldPhoneKeypadDecoderService(IKeyLayoutStrategy? layoutStrategy = null) : IPhoneKeypadDecoder
     {
         private readonly IKeyLayoutStrategy _layoutStrategy = layoutStrategy ?? new OldPhoneKeyLayoutStrategy();
