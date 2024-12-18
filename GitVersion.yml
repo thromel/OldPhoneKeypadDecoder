@@ -13,12 +13,12 @@ branches:
     regex: ^master$
     mode: ContinuousDeployment
     increment: Patch
-    track-merge-target: true
+    tracks-release-branches: true
   main:
     regex: ^main$
     mode: ContinuousDeployment
     increment: Patch
-    track-merge-target: true
+    tracks-release-branches: true
   feature:
     regex: ^features?[/-]
     mode: ContinuousDeployment
