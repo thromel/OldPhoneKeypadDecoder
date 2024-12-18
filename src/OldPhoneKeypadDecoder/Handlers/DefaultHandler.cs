@@ -11,7 +11,7 @@ namespace OldPhoneKeypadDecoder.Handlers
     /// This handler is typically placed at the end of the chain and ignores any
     /// unprocessed characters, effectively filtering out invalid input.
     /// </remarks>
-    public class DefaultHandler : BaseHandler
+    public class DefaultHandler(IKeyLayoutStrategy layoutStrategy) : BaseHandler(layoutStrategy)
     {
         public override void Handle(char ch, DecodeContext context)
         {

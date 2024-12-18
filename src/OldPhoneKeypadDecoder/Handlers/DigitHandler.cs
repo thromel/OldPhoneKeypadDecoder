@@ -15,7 +15,7 @@ namespace OldPhoneKeypadDecoder.Handlers
     /// - Handles buffer state for multi-press character selection
     /// - Implements wrap-around for excessive key presses
     /// </remarks>
-    public class DigitHandler : BaseHandler
+    public class DigitHandler(IKeyLayoutStrategy layoutStrategy) : BaseHandler(layoutStrategy)
     {
         /// <inheritdoc />
         public override void Handle(char ch, DecodeContext? context)
