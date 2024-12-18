@@ -82,6 +82,26 @@ dotnet test
 # Run console demo
 dotnet run --project src/OldPhoneKeypadDecoder.ConsoleApp
 ```
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment. The pipeline:
+
+1. **Versioning**
+   - Uses GitVersion for semantic versioning
+   - Automatically increments version based on commit messages
+   - Supports conventional commits format
+
+2. **Build & Test**
+   - Builds on Ubuntu latest
+   - Runs unit tests
+   - Collects code coverage metrics
+   - Coverage reports sent to Codecov
+
+3. **Package & Publish**
+   - Creates NuGet package with symbols
+   - Publishes to NuGet.org on main/master branch pushes
+   - Includes source link support for debugging
+
 
 ## Contributing
 
