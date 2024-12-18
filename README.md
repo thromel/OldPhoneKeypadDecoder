@@ -65,6 +65,12 @@ decoderService.Decode("227#") // "B" (backspace removes 'A')
 - `src/OldPhoneKeypadDecoder.ConsoleApp/`: Console application demo
 - `tests/OldPhoneKeypadDecoder.Tests/`: Unit tests
 
+## Documentation
+
+- [Source Code Documentation](src/README.md): Detailed architecture overview, design patterns, and component descriptions
+- [Testing Documentation](tests/README.md): Detailed testing overview
+
+
 ## Development
 ```bash
 # Clone the repository
