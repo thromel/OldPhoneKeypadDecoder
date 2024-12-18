@@ -20,8 +20,16 @@ namespace OldPhoneKeypadDecoder.Services
     /// </remarks>
     public class OldPhoneKeypadDecoderService(IKeyLayoutStrategy? layoutStrategy = null) : IPhoneKeypadDecoder
     {
+        /// <summary>
+        /// The layout strategy used to map key presses to characters.
+        /// </summary>
         private readonly IKeyLayoutStrategy _layoutStrategy = layoutStrategy ?? new OldPhoneKeyLayoutStrategy();
 
+        /// <summary>
+        /// Decodes the given input string according to the old phone keypad layout.
+        /// </summary>
+        /// <param name="input">The input string to decode.</param>
+        /// <returns>The decoded string.</returns>
         public string Decode(string? input)
         {
             if (input is null)
@@ -44,6 +52,10 @@ namespace OldPhoneKeypadDecoder.Services
             return context.Result.ToString();
         }
 
+        /// <summary>
+        /// Builds the chain of responsibility for handling different characters.
+        /// </summary>
+        /// <returns>The first handler in the chain.</returns>
         private ICharacterHandler? BuildHandlerChain()
         {
             // Create handlers

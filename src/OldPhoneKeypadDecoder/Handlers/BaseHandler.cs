@@ -16,11 +16,13 @@ namespace OldPhoneKeypadDecoder.Handlers
         private ICharacterHandler? _nextHandler;
         protected readonly IKeyLayoutStrategy LayoutStrategy = layoutStrategy;
 
+        /// <inheritdoc />
         public virtual void Handle(char ch, DecodeContext context)
         {
             _nextHandler?.Handle(ch, context);
         }
 
+        /// <inheritdoc />
         public void SetNext(ICharacterHandler next)
         {
             _nextHandler = next;

@@ -12,43 +12,38 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
 
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.10.2
+        with:
+          preferLatestVersion: false
+          versionSpec: '6.1.0'
+
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0.10.2
+        with:
+          useConfigFile: true
+
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.gitversion.outputs.nuGetVersion }}
 
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage"
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+      - name: Pack
+        run: dotnet pack src/OldPhoneKeypadDecoder/OldPhoneKeypadDecoder.csproj --no-build --configuration Release /p:Version=${{ steps.gitversion.outputs.nuGetVersion }} --output .
 
-      - name: Publish
+      - name: Publish to NuGet
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        run: |
-          dotnet publish src/OldPhoneKeypadDecoder/OldPhoneKeypadDecoder.csproj -c Release -o publish/lib
-          dotnet publish src/OldPhoneKeypadDecoder.ConsoleApp/OldPhoneKeypadDecoder.ConsoleApp.csproj -c Release -o publish/console
-
-      - name: Upload Library Artifact
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        uses: actions/upload-artifact@v3
-        with:
-          name: OldPhoneKeypadDecoder-Library
-          path: publish/lib
-
-      - name: Upload Console App Artifact
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        uses: actions/upload-artifact@v3
-        with:
-          name: OldPhoneKeypadDecoder-Console
-          path: publish/console
+        run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
