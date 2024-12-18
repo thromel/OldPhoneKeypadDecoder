@@ -8,14 +8,17 @@ branches:
     regex: ^dev(elop)?$
     mode: ContinuousDeployment
     increment: Minor
+    track-merge-target: true
   master:
     regex: ^master$
     mode: ContinuousDeployment
     increment: Patch
+    track-merge-target: true
   main:
     regex: ^main$
     mode: ContinuousDeployment
     increment: Patch
+    track-merge-target: true
   feature:
     regex: ^features?[/-]
     mode: ContinuousDeployment
