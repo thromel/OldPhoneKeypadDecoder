@@ -14,15 +14,6 @@ branches:
     mode: ContinuousDeployment
     increment: Patch
     tracks-release-branches: true
-  main:
-    regex: ^main$
-    mode: ContinuousDeployment
-    increment: Patch
-    tracks-release-branches: true
-  feature:
-    regex: ^features?[/-]
-    mode: ContinuousDeployment
-    increment: Inherit
 
 ignore:
   sha: []
