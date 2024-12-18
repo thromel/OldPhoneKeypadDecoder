@@ -7,12 +7,14 @@ namespace OldPhoneKeypadDecoder.Handlers
     {
         public override void Handle(char ch, DecodeContext context)
         {
-            if (ch is ' ' or '0')
+            if (ch == '0')
             {
-                // Flush current character buffer
                 context.FlushBuffer();
-                // Add space to result for both space and '0' key
                 context.Result.Append(' ');
+            }
+            else if (ch == ' ')
+            {
+                context.FlushBuffer();
             }
             else
             {
