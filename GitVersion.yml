@@ -5,21 +5,22 @@ patch-version-bump-message: "^(build|chore|ci|docs|fix|perf|refactor|revert|styl
 
 branches:
   develop:
-    regex: ^dev(elop)?(ment)?$
     mode: ContinuousDeployment
     increment: Minor
+    is-development: true
+    source-branches: ['master', 'main']
   master:
-    regex: ^master$
     mode: ContinuousDeployment
     increment: Patch
+    is-mainline: true
   main:
-    regex: ^main$
     mode: ContinuousDeployment
     increment: Patch
+    is-mainline: true
   feature:
-    regex: ^features?[/-]
     mode: ContinuousDeployment
     increment: Inherit
+    source-branches: ['develop']
 
 ignore:
   sha: []
