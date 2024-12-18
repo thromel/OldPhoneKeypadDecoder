@@ -1,0 +1,53 @@
+name: .NET CI/CD
+
+on:
+  push:
+    branches: ['main', 'master']
+  pull_request:
+    branches: ['main', 'master']
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage"
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Publish
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        run: |
+          dotnet publish src/OldPhoneKeypadDecoder/OldPhoneKeypadDecoder.csproj -c Release -o publish/lib
+          dotnet publish src/OldPhoneKeypadDecoder.ConsoleApp/OldPhoneKeypadDecoder.ConsoleApp.csproj -c Release -o publish/console
+
+      - name: Upload Library Artifact
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        uses: actions/upload-artifact@v3
+        with:
+          name: OldPhoneKeypadDecoder-Library
+          path: publish/lib
+
+      - name: Upload Console App Artifact
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        uses: actions/upload-artifact@v3
+        with:
+          name: OldPhoneKeypadDecoder-Console
+          path: publish/console
